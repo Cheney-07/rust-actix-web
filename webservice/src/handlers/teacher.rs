@@ -9,8 +9,7 @@ pub async fn get_all_teachers(
     app_state: web::Data<AppState>
 ) -> Result<HttpResponse, MyError> {
     get_all_teachers_db(&app_state.db)
-        .await
-        .map(|teachers| HttpResponse::Ok().json(teachers))
+        .await.map(|teachers| HttpResponse::Ok().json(teachers))
 }
 
 pub async fn get_teacher_details(
@@ -18,8 +17,7 @@ pub async fn get_teacher_details(
 ) -> Result<HttpResponse, MyError> {
         let teacher_id = params.into_inner();
         get_teacher_details_db(&app_state.db, teacher_id)
-    .await
-    .map(|teacher| HttpResponse::Ok().json(teacher))
+    .await.map(|teacher| HttpResponse::Ok().json(teacher))
 
 }
 
@@ -27,9 +25,8 @@ pub async fn post_new_teacher(
     app_state: web::Data<AppState>,
     new_teacher:web::Json<CreateTeacher>,
 ) -> Result<HttpResponse, MyError> {
-    post_new_teacher_db(&app_state.db, CreateTeacher::from(&new_teacher))
-    .await
-    .map(|teacher| HttpResponse::Ok().json(teacher))
+    post_new_teacher_db(&app_state.db, CreateTeacher::from(new_teacher))
+    .await.map(|teacher| HttpResponse::Ok().json(teacher))
 }
 
 pub async fn update_teacher_details(
@@ -41,7 +38,7 @@ pub async fn update_teacher_details(
     update_teacher_details_db(
         &app_state.db,
         teacher_id,
-        UpdateTeacher::from(&update_teacher)
+        UpdateTeacher::from(update_teacher)
     )
     .await
     .map(|teacher| HttpResponse::Ok().json(teacher))
